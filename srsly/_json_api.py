@@ -17,6 +17,9 @@ def json_dumps(
     sort_keys (bool): Sort dictionary keys. Falls back to json module for now.
     RETURNS (str): The serialized string.
     """
+    print(f"Received data: {data}")
+    print(f"Received indent: {indent}")
+    print(f"Received sort_keys: {sort_keys}")
     if sort_keys:
         indent = None if indent == 0 else indent
         result = _builtin_json.dumps(
@@ -128,7 +131,8 @@ def write_gzip_jsonl(
     with gzip.open(file_path, mode=mode) as f:
         if append and append_new_line:
             f.write("\n".encode("utf-8"))
-        f.writelines([(json_dumps(line) + "\n").encode("utf-8") for line in lines])
+        f.writelines([(json_dumps(line) + "\n").encode("utf-8")
+                      for line in lines])
 
 
 def read_jsonl(path: FilePath, skip: bool = False) -> Iterable[JSONOutput]:
